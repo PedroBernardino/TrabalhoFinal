@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Carbon\Carbon;
 
 class CreatePostsTable extends Migration
 {
@@ -17,7 +18,6 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->longText('content');
             $table->string('photo')->nullable();
-            $table->dateTime('date');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
