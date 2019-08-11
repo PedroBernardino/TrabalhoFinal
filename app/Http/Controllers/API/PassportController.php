@@ -13,7 +13,7 @@ class PassportController extends Controller
 {
     public $successStatus = 200;
     public function login () {
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')]) || Auth::attempt(['username' => request('username'), 'password' => request('password')])) {
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $success['token'] = $user-> createToken('MyApp')->accessToken;
             return response()->json(['success' => $success],$this->successStatus);
@@ -26,7 +26,6 @@ class PassportController extends Controller
     public function register (Request $request) {
         $validator = Validator::make($request -> all(), [
             'name' => 'required',
-            'username' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
@@ -38,7 +37,6 @@ class PassportController extends Controller
         $newUser->name = $request->name;
         $newUser->email = $request->email;
         $newUser->password = bcrypt($request->password);
-        $newUser->username = $request->username;
         $newUser->save();
         $success['token'] = $newUser->createToken('MyApp')->accessToken;
         $success['name'] = $newUser-> name;
